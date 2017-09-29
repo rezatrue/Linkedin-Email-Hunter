@@ -10,6 +10,7 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -90,15 +91,13 @@ public class ChromeOperator {
 		
 		driver.findElement(By.cssSelector("a.org-company-employees-snackbar__details-highlight.snackbar-description-see-all-link.link-without-visited-state.ember-view")).click();
 		waitForPageLoad();
-		JavascriptExecutor js = (JavascriptExecutor) driver;
-		js.executeScript("scrollBy(0,1050)");
-		js.executeScript("scrollBy(0,1150)");
-		js.executeScript("scrollBy(0,1250)");
-		js.executeScript("scrollBy(0,1350)");
-		js.executeScript("scrollBy(0,1450)");
-		waitForPageLoad();
+		int count = 0;
+		// scroll down to load page properly
+		while(count < 100){
+			driver.findElement(By.cssSelector("body")).sendKeys(Keys.ARROW_DOWN);
+			count++;
+		}
         String pageSource = driver.getPageSource();
-
 		return pageSource; 
 		}
 	

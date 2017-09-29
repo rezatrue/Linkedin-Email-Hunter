@@ -14,7 +14,6 @@ public class ExtractProfileInfo {
 		person = new Person();
 	}
 	
-		
 	public Person extractInfo(String pageSource){
 		
         Document doc = Jsoup.parse(pageSource, "https://www.linkedin.com/");
@@ -31,14 +30,14 @@ public class ExtractProfileInfo {
         String lastname = names[names.length-1]; 
         person.setLastname(lastname);
 
-        System.out.println("name :" + firstname + " " +lastname);
+        //System.out.println("name :" + firstname + " " +lastname);
         
         String company = "";
         String designation = "";
         // designation with company name
         Element position = doc.select("h2.pv-top-card-section__headline").first();
         String companydesignation = position.text();
-        System.out.println(companydesignation);
+        //System.out.println(companydesignation);
         if (companydesignation.toLowerCase().contains(" at")){
         	designation = companydesignation.substring(0, companydesignation.indexOf(" at"));
         	company = companydesignation.substring(companydesignation.indexOf(" at")+3, companydesignation.length());
@@ -47,8 +46,8 @@ public class ExtractProfileInfo {
         	company = companydesignation.substring(companydesignation.indexOf(",")+1, companydesignation.length());  
         }
         person.setDesignation(designation);
-        System.out.println("designation :" + designation);
-        System.out.println("company :" + company);
+        //System.out.println("designation :" + designation);
+        //System.out.println("company :" + company);
 
         
         // profile url   
@@ -61,7 +60,7 @@ public class ExtractProfileInfo {
 	        System.err.println("error :" + e.getMessage());
 		}
 		person.setProfileUrl(profileUrl);
-        System.out.println("profile link" + " : " + profileUrl);
+        //System.out.println("profile link" + " : " + profileUrl);
 
 		// website   
         String website = "";
@@ -78,7 +77,7 @@ public class ExtractProfileInfo {
 	        System.err.println("error :" + e.getMessage());
 		}
 		person.setWebsite(website);
-        System.out.println("websites" + " : " + website);
+        //System.out.println("websites" + " : " + website);
 
         
      //String linkMail = selectMail.attr("abs:href"); // "http://jsoup.org/"
@@ -106,7 +105,7 @@ public class ExtractProfileInfo {
         Element selectImage = profileImage.select("img.pv-top-card-section__image").first();
         image = selectImage.attr("src"); 
         person.setImage(image);
-        System.out.println("Image" + " : " + image);
+        //System.out.println("Image" + " : " + image);
         
         //https://media.licdn.com/mpr/mpr/shrink_100_100/p/1/000/0ea/035/1a81184.png
     String compLiskedinPage = "";    
@@ -132,9 +131,9 @@ public class ExtractProfileInfo {
 
 	    	
         	compLiskedinPage = companyanckor.attr("abs:href"); 
-        	System.out.println(" company Liskedin Page : " + compLiskedinPage);
+        	//System.out.println(" company Liskedin Page : " + compLiskedinPage);
 		    Element companyImage = exprience.select("img.lazy-image.pv-entity__logo-img.pv-entity__logo-img.EntityPhoto-square-5.loaded").first();  
-		    System.out.println(" company Image : " + companyImage);
+		    //System.out.println(" company Image : " + companyImage);
 		    
 		    companylogo = companyImage.attr("src"); 
 		    if(company!="") company = companyImage.attr("alt"); 
@@ -146,9 +145,9 @@ public class ExtractProfileInfo {
     person.setCompanylinkedinpage(compLiskedinPage);  
     person.setCompanylogo(companylogo);  
     person.setCompany(company);  
-    System.out.println("compLiskedinPage" + " : " + compLiskedinPage);
-    System.out.println("companylogo" + " : " + companylogo);
-    System.out.println("company" + " : " + company);
+    //System.out.println("compLiskedinPage" + " : " + compLiskedinPage);
+    //System.out.println("companylogo" + " : " + companylogo);
+    //System.out.println("company" + " : " + company);
 
      
       return person;

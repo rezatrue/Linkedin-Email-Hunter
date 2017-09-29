@@ -54,6 +54,8 @@ public class MainController implements Initializable{
 	private String sourceCode;
 	private Person person;
 	private ChromeOperator  chromeOperator;
+	private ExtractProfileInfo extractProfileInfo;
+
 	
 	@FXML private Label designationL;
 	@FXML private TextField compamyNameTF;
@@ -97,7 +99,7 @@ public class MainController implements Initializable{
 	
 	private void setProfile() {
 		// TODO Auto-generated method stub
-		ExtractProfileInfo extractProfileInfo = new ExtractProfileInfo();
+		extractProfileInfo = new ExtractProfileInfo();
 		
 		person = extractProfileInfo.extractInfo(this.sourceCode);
 		firstNameTF.setText(person.getFirstname());
@@ -137,12 +139,19 @@ public class MainController implements Initializable{
 		String source = chromeOperator.takeListSource();
 		EmployeList employeList = new EmployeList(compamyNameTF.getText(), source);
 		ArrayList<String> list = employeList.takeList();
-		Iterator it = list.iterator();
-		for (String string : list) {
-			System.out.println(string);
-		}
-//		chromeOperator.nextEmplyeeListPage();
+		System.out.println(list.size());
 		
+		Iterator it = list.iterator();
+		extractProfileInfo = new ExtractProfileInfo();
+		Person person = new Person();
+		while(it.hasNext()){
+			String sourceCode = chromeOperator.openProfile(it.next().toString());
+			person = extractProfileInfo.extractInfo(sourceCode);
+			System.out.println(person.getFirstname() + " " + person.getLastname()
+					+ person.getEmail());
+		}
+		
+//		chromeOperator.nextEmplyeeListPage();
 	}
 
 	public void listTakeIn(){
@@ -218,14 +227,12 @@ public class MainController implements Initializable{
 	
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
+		extractProfileInfo = new ExtractProfileInfo();
 		chromeOperator = null;
 		person = new Person();
 		listTA.setText("");
 		engineProfile = profileWV.getEngine();
 		engineLogo = logoWV.getEngine();
 	}
-	
-
-	
 	
 }
