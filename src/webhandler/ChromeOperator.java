@@ -8,7 +8,9 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 
@@ -61,6 +63,8 @@ public class ChromeOperator {
 	private boolean loginLinkedinAccount(){
 		
 		try {
+//			driver.findElement(By.cssSelector("input#login-email.login-email")).sendKeys("bennye45@oaudienceij.com");
+//	        driver.findElement(By.cssSelector("input#login-password.login-password")).sendKeys("sj99991212");
 			driver.findElement(By.cssSelector("input#login-email.login-email")).sendKeys("rezatrue@yahoo.com");
 	        driver.findElement(By.cssSelector("input#login-password.login-password")).sendKeys("1Canada12");
 //			driver.findElement(By.cssSelector("input#login-email.login-email")).sendKeys("faysal.uddin@mail.ru");
@@ -74,15 +78,51 @@ public class ChromeOperator {
 
 	}
 
-	public String openProfile(String purl){
-        driver.get(purl);
+	
+	public String openCompanypage(String url){
+		driver.get(url);
+		return ""; //driver.findElement(By.cssSelector("a.org-about-us-company-module__website.mb3.link-without-visited-state.ember-view")).getAttribute("href").toString();
+	}
+	
+	public String companyEmplyeListPage(){
+		driver.findElement(By.cssSelector("a.org-company-employees-snackbar__details-highlight.snackbar-description-see-all-link.link-without-visited-state.ember-view")).click();
+		return ""; 
+		}
+	
+	public String takeListSource(){
+		
+		driver.findElement(By.cssSelector("a.org-company-employees-snackbar__details-highlight.snackbar-description-see-all-link.link-without-visited-state.ember-view")).click();
+		
+        String pageSource = driver.getPageSource();
 
+		return pageSource; 
+		}
+	
+	public String nextEmplyeeListPage(){
+		driver.findElement(By.cssSelector("button.next")).click();
+		return ""; 
+		}
+
+		
+	
+	
+	public String openProfile(String purl){
+		driver.get(purl);
+		
         driver.findElement(By.cssSelector("button.contact-see-more-less.link-without-visited-state")).click();
+		// if this don't perfrom well try saving page first
+        // this is not fullprofe way try savaing the page first
+		JavascriptExecutor js = (JavascriptExecutor) driver;
+		js.executeScript("scrollBy(0,1050)");
+		js.executeScript("scrollBy(0,1150)");
+
         //String yourtext= driver.findElement(By.tagName("body")).getText() ;
+        
         String pageSource = driver.getPageSource();
 
 		return pageSource;
 	}
+
 	
 	
 }

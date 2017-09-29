@@ -18,6 +18,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
@@ -26,6 +27,7 @@ import javafx.scene.image.ImageViewBuilder;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 import webhandler.ChromeOperator;
+import webhandler.PeopleList;
 
 public class MainController implements Initializable{
 	@FXML private TextField firstNameTF;
@@ -49,8 +51,12 @@ public class MainController implements Initializable{
 	@FXML private WebView logoWV;
 	private WebEngine engineProfile, engineLogo;
 	private String sourceCode;
-
+	private Person person;
 	private ChromeOperator  chromeOperator;
+	
+	@FXML private Label designationL;
+	@FXML private TextField linkedinCompamyPageTF;
+	@FXML private Button companyInfotBtn;
 	
 	// need to add pop alert 
 	private void popupErrorMassage(String msg){
@@ -62,7 +68,7 @@ public class MainController implements Initializable{
 		if(msg!="") popupErrorMassage(msg);
 	}
 	
-	
+	// comment must be removed in live 
 	private void openUrl(){
 		String url = prifileUrlTF.getText().toString().trim();
 //		if(!(url.toLowerCase().startsWith("https://www.linkedin.com/"))) 
@@ -77,13 +83,15 @@ public class MainController implements Initializable{
 		// TODO Auto-generated method stub
 		ExtractProfileInfo extractProfileInfo = new ExtractProfileInfo();
 		
-		Person person = extractProfileInfo.extractInfo(this.sourceCode);
+		person = extractProfileInfo.extractInfo(this.sourceCode);
 		firstNameTF.setText(person.getFirstname());
 		lastNameTF.setText(person.getLastname());
 		webUrlTF.setText(person.getWebsite());
 		listTA.setText(person.getEmail());
 		engineProfile.load(person.getImage());
 		engineLogo.load(person.getCompanylogo());
+		designationL.setText(person.getDesignation());
+		linkedinCompamyPageTF.setText(person.getCompanylinkedinpage());
 		person.toString();
 	}
 	private void clearScreen(){
@@ -100,11 +108,32 @@ public class MainController implements Initializable{
 		clearScreen();
 		openUrl();
 		setProfile();
+		
 		// https://www.linkedin.com/in/yaronzoller/
 		
 	}
 	
 	
+	
+	public void companyInfo(){
+		if(person.getCompanylinkedinpage()!= null)
+			chromeOperator.openCompanypage(person.getCompanylinkedinpage());
+		else{
+			System.out.println("taking url from ttext filed");
+			chromeOperator.openCompanypage(linkedinCompamyPageTF.getText());
+		}
+		System.out.println("----");
+		//chromeOperator.companyEmplyeListPage();
+		String source = chromeOperator.takeListSource();
+		PeopleList peoplelist = new PeopleList("", source);
+		peoplelist.takeList();
+		System.out.println("----");
+		chromeOperator.nextEmplyeeListPage();
+//		source = chromeOperator.takeListSource();
+//		peoplelist = new PeopleList("",source);
+//		peoplelist.takeList();	
+		
+	}
 
 	public void listTakeIn(){
 		String newlist = listTA.getText().replaceAll("\n", " ");
@@ -180,6 +209,7 @@ public class MainController implements Initializable{
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		chromeOperator = new ChromeOperator();
+		person = new Person();
 		listTA.setText("");
 		engineProfile = profileWV.getEngine();
 		engineLogo = logoWV.getEngine();

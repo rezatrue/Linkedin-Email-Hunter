@@ -10,13 +10,15 @@ public class Person {
 	private String company;
 	private String website;
 	private String companylogo;
+	private String companylinkedinpage;
+
 
 	public Person() {
 	}
 	
 	
 	public Person(String firstname, String lastname, String image, String email, String profileUrl, String designation,
-			String company, String website, String companylogo) {
+			String company, String website, String companylogo, String companylinkedinpage) {
 		super();
 		this.firstname = firstname;
 		this.lastname = lastname;
@@ -27,6 +29,7 @@ public class Person {
 		this.company = company;
 		this.website = website;
 		this.companylogo = companylogo;
+		this.companylinkedinpage = companylinkedinpage;
 	}
 
 
@@ -105,19 +108,27 @@ public class Person {
 		this.companylogo = companylogo;
 	}
 
+	
+
+	public String getCompanylinkedinpage() {
+		return companylinkedinpage;
+	}
+
+
+	public void setCompanylinkedinpage(String companylinkedinpage) {
+		this.companylinkedinpage = companylinkedinpage;
+	}
+
 
 	@Override
 	public String toString() {
 		System.out.println("firstname = " + firstname + ", lastname = " + lastname + ", image = " + image + ", email=" + email
 				+ ", profileUrl = " + profileUrl + ", designation = " + designation + ", company = " + company + ", website = "
-				+ website + ", companylogo = " + companylogo);
+				+ website + ", companylogo = " + companylogo + "companylinkedinpage = " + companylinkedinpage);
 		return "Person [firstname=" + firstname + ", lastname=" + lastname + ", image=" + image + ", email=" + email
 				+ ", profileUrl=" + profileUrl + ", designation=" + designation + ", company=" + company + ", website="
-				+ website + ", companylogo=" + companylogo + "]";
+				+ website + ", companylogo=" + companylogo + ", companylinkedinpage=" + companylinkedinpage + "]";
 	}
-	
-	
-	
 	
 	
 	

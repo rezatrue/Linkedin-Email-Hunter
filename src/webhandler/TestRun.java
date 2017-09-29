@@ -28,20 +28,31 @@ public class TestRun {
       try {
     	// saved profile page  
   		//File input = new File("E:\\Project Findout Linkedin user Email address\\saved pages\\Nabila Tajrin _ LinkedIn.html");
-  		File input = new File("E:\\Project Findout Linkedin user Email address\\saved pages\\Yaron J. Zoller, DBA _ LinkedIn.html");
-  		// saved company page 
-    	//File input = new File("E:\\Project Findout Linkedin user Email address\\saved pages\\Dnet - a social enterprise_ Overview _ LinkedIn.html");
-  		//File input = new File("E:\\Project Findout Linkedin user Email address\\saved pages\\Soliber Net_ Overview _ LinkedIn.html");
-  		// saved company list page 
-    	//File input = new File("E:\\Project Findout Linkedin user Email address\\saved pages\\company_people_Search _ LinkedIn1.html");
+  		//File input = new File("E:\\Project Findout Linkedin user Email address\\saved pages\\Yaron J. Zoller, DBA _ LinkedIn.html");
   		
+    	  // saved company page 
+    	  //File input = new File("E:\\Project Findout Linkedin user Email address\\saved pages\\Dnet - a social enterprise_ Overview _ LinkedIn.html");
+    	  //File input = new File("E:\\Project Findout Linkedin user Email address\\saved pages\\Soliber Net_ Overview _ LinkedIn.html");
+    	//File input = new File("E:\\Project Findout Linkedin user Email address\\saved pages\\Nova Southeastern University_ Overview _ LinkedIn.html");
+    	//File input = new File("E:\\Project Findout Linkedin user Email address\\saved pages\\Monotype_ Overview _ LinkedIn.html");
+  
+    	  // saved company list page 
+    	//File input = new File("E:\\Project Findout Linkedin user Email address\\saved pages\\company_people_Search _ LinkedIn1.html");
+    	//File input = new File("E:\\Project Findout Linkedin user Email address\\saved pages\\(2) Search _ LinkedIn.html");
+    	File input = new File("E:\\Project Findout Linkedin user Email address\\saved pages\\company_people_Search _ LinkedIn1.html");
+
+    	
+    	
     	  doc = Jsoup.parse(input, "UTF-8", "https://www.linkedin.com/");
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-     
-      takeDatafromProfile();
+      String pageSource = doc.html(); 
+      PeopleList peopleList = new PeopleList("dnet", pageSource);
+      peopleList.takeList();
+      //companyInfo();
+      //takeDatafromProfile();
         System.out.println("- - success - -");
 	}
 	
@@ -147,7 +158,32 @@ public class TestRun {
         
 	}
 
-	
+	public static void companyInfo(){
+        
+        // Name
+		Element eName = doc.select("h1.org-top-card-module__name").first();
+        //System.out.println("eName : " +  eName);
+        System.out.println("eName : " +  eName.text());
+
+        // Website
+        Element eWebsite = doc.select("a.org-about-us-company-module__website.mb3.link-without-visited-state.ember-view").first();
+        //System.out.println("eWebsite : " +  eWebsite);
+        System.out.println("eWebsite : " +  eWebsite.text());
+
+        //Logo
+        Elements eLogodiv = doc.select("div.org-top-card-module__container.container-with-shadow.clearfix");
+
+        Element eLogo = eLogodiv.select("img.lazy-image org-top-card-module__logo.loaded").first();
+        System.out.println("eLogo : " +  eLogo);
+        //System.out.println("eLogo : " +  eLogo.attr("src"));
+        
+        
+        // see all employee
+        Element eEmplyePage = doc.select("a.org-company-employees-snackbar__details-highlight.snackbar-description-see-all-link.link-without-visited-state.ember-view").first();
+        //System.out.println("eEmplyePage : " +  eEmplyePage);
+        System.out.println("eEmplyePage : " +  eEmplyePage.attr("href"));
+
+	}
 	public static void takeDatafromProfile(){
 		/*
 		// work in live
@@ -206,7 +242,8 @@ public class TestRun {
         Elements companylistul = companylist.select("ul.pv-profile-section__section-info.section-info.pv-profile-section__section-info--has-no-more.ember-view");
         Elements companyimgContainer = companylistul.select("div.pv-profile-section__sortable-card-item.pv-position-entity.ember-view");
 
-        Element companyanckor = exprience.select("a.ember-view").first();
+        //Element companyanckor = exprience.select("a.ember-view").first();
+        Element companyanckor = exprience.select("div.pv-profile-section__sortable-card-item.pv-position-entity.ember-view > a.ember-view").first();
 
     	String compLiskedinPage = companyanckor.attr("abs:href");
     	System.out.println("compLiskedinPage  " +compLiskedinPage);

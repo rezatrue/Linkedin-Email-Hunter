@@ -124,6 +124,5 @@ public class ChromeOperator2 {
         System.out.println("Company Image" + " : " + companylogo);
         return new Person();
 	}
-	
-	
+		
 }

@@ -14,6 +14,7 @@ public class ExtractProfileInfo {
 		person = new Person();
 	}
 	
+		
 	public Person extractInfo(String pageSource){
 		
         Document doc = Jsoup.parse(pageSource, "https://www.linkedin.com/");
@@ -108,7 +109,7 @@ public class ExtractProfileInfo {
         System.out.println("Image" + " : " + image);
         
         //https://media.licdn.com/mpr/mpr/shrink_100_100/p/1/000/0ea/035/1a81184.png
-        
+    String compLiskedinPage = "";    
     String company = "";
 	String companylogo = "";
 	try {
@@ -127,23 +128,25 @@ public class ExtractProfileInfo {
 		    Elements companydiv = companyanckor.select("div.pv-entity__logo.company-logo");
 		    //Element companyImage = companyimgContainer.select("img.lazy-image.pv-entity__logo-img.pv-entity__logo-img.EntityPhoto-square-5.loaded").first();
 		    */
-	    	Element companyanckor = exprience.select("a.ember-view").first();
+	    	//Element companyanckor = exprience.select("a.ember-view").first();
+	        Element companyanckor = exprience.select("div.pv-profile-section__sortable-card-item.pv-position-entity.ember-view > a.ember-view").first();
 
 	    	
-        	String compLiskedinPage = companyanckor.attr("abs:href"); 
+        	compLiskedinPage = companyanckor.attr("abs:href"); 
         	System.out.println(" company Liskedin Page : " + compLiskedinPage);
 		    Element companyImage = exprience.select("img.lazy-image.pv-entity__logo-img.pv-entity__logo-img.EntityPhoto-square-5.loaded").first();  
 		    System.out.println(" company Image : " + companyImage);
-
+		    
 		    String compImage = companyImage.attr("src"); 
 		    String compName = companyImage.attr("alt"); 
 		    company = compName;
-
+		    
 		    companylogo = compImage;
 	} catch (Exception e) {
 		// TODO Auto-generated catch block
 		e.printStackTrace();
 	}
+    person.setCompanylinkedinpage(compLiskedinPage);  
       person.setCompanylogo(companylogo);  
       if(company!="")person.setCompany(company);  
      
