@@ -21,31 +21,28 @@
             <WebView fx:id="profileWV" prefHeight="130.0" prefWidth="133.0" />
          </children>
       </StackPane>
-      <Label fx:id="designationL" layoutX="19.0" layoutY="143.0" prefHeight="25.0" prefWidth="124.0" text="        Designation" textAlignment="CENTER">
+      <Label fx:id="designationL" alignment="CENTER" contentDisplay="CENTER" layoutX="19.0" layoutY="143.0" prefHeight="17.0" prefWidth="124.0" text="Designation" textAlignment="CENTER">
          <font>
-            <Font size="13.0" />
+            <Font size="9.0" />
          </font></Label>
-      <StackPane layoutX="38.0" layoutY="206.0" prefHeight="71.0" prefWidth="88.0">
+      <StackPane layoutX="14.0" layoutY="230.0" prefHeight="92.0" prefWidth="124.0">
          <children>
             <WebView fx:id="logoWV" prefHeight="71.0" prefWidth="100.0" />
          </children>
       </StackPane>
-      <Label layoutX="37.0" layoutY="276.0" prefHeight="25.0" prefWidth="88.0" text="Company Logo">
-         <font>
-            <Font size="13.0" />
-         </font></Label>
       <Label layoutX="164.0" layoutY="160.0" prefHeight="25.0" prefWidth="71.0" text=" Web URL" />
       <TextField fx:id="webUrlTF" layoutX="243.0" layoutY="160.0" promptText="website" />
       <Label layoutX="155.0" layoutY="24.0" prefHeight="25.0" prefWidth="88.0" text="Email Address" />
       <TextField fx:id="emailTF" layoutX="243.0" layoutY="24.0" />
-      <Button layoutX="160.0" layoutY="265.0" mnemonicParsing="false" onAction="#open" prefHeight="25.0" prefWidth="64.0" text="Open" />
+      <Button fx:id="openBrowserBtn" layoutX="160.0" layoutY="265.0" mnemonicParsing="false" onAction="#open" prefHeight="25.0" prefWidth="64.0" text="Open" />
       <Button layoutX="247.0" layoutY="265.0" mnemonicParsing="false" onAction="#start" prefHeight="25.0" prefWidth="64.0" text="Start" />
       <TextField fx:id="prifileUrlTF" layoutX="155.0" layoutY="298.0" prefHeight="25.0" prefWidth="237.0" promptText="profile URL" />
       <TextArea fx:id="listTA" layoutX="413.0" layoutY="16.0" prefHeight="309.0" prefWidth="200.0" />
       <Button layoutX="242.0" layoutY="196.0" mnemonicParsing="false" onAction="#generateEmail" prefHeight="25.0" prefWidth="149.0" text="Generate Email" />
       <Button layoutX="259.0" layoutY="56.0" mnemonicParsing="false" onAction="#listTakeOut" prefHeight="25.0" prefWidth="47.0" text="&gt;&gt;&gt;" />
       <Button layoutX="331.0" layoutY="56.0" mnemonicParsing="false" onAction="#listTakeIn" prefHeight="25.0" prefWidth="47.0" text="&lt;&lt;&lt;" />
-      <TextField fx:id="linkedinCompamyPageTF" layoutX="14.0" layoutY="173.0" prefHeight="25.0" prefWidth="136.0" promptText="linkedin Company Page" />
+      <TextField fx:id="linkedinCompamyPageTF" layoutX="12.0" layoutY="196.0" prefHeight="25.0" prefWidth="215.0" promptText="linkedin Company Page" />
       <Button layoutX="331.0" layoutY="265.0" mnemonicParsing="false" onAction="#companyInfo" prefHeight="25.0" prefWidth="64.0" text="Company" />
+      <TextField fx:id="compamyNameTF" layoutX="13.0" layoutY="164.0" prefHeight="25.0" prefWidth="136.0" promptText="Company Name" />
    </children>
 </AnchorPane>

@@ -12,6 +12,8 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 
+import dataprocessor.ExtractProfileInfo;
+
 public class TestRun {
 	private static WebDriver driver;
 	private static Document doc;
@@ -27,7 +29,7 @@ public class TestRun {
         
       try {
     	// saved profile page  
-  		//File input = new File("E:\\Project Findout Linkedin user Email address\\saved pages\\Nabila Tajrin _ LinkedIn.html");
+  		File input = new File("E:\\Project Findout Linkedin user Email address\\saved pages\\Nabila Tajrin _ LinkedIn.html");
   		//File input = new File("E:\\Project Findout Linkedin user Email address\\saved pages\\Yaron J. Zoller, DBA _ LinkedIn.html");
   		
     	  // saved company page 
@@ -36,21 +38,27 @@ public class TestRun {
     	//File input = new File("E:\\Project Findout Linkedin user Email address\\saved pages\\Nova Southeastern University_ Overview _ LinkedIn.html");
     	//File input = new File("E:\\Project Findout Linkedin user Email address\\saved pages\\Monotype_ Overview _ LinkedIn.html");
   
-    	  // saved company list page 
+    	 // saved company list page 
     	//File input = new File("E:\\Project Findout Linkedin user Email address\\saved pages\\company_people_Search _ LinkedIn1.html");
     	//File input = new File("E:\\Project Findout Linkedin user Email address\\saved pages\\(2) Search _ LinkedIn.html");
-    	File input = new File("E:\\Project Findout Linkedin user Email address\\saved pages\\company_people_Search _ LinkedIn1.html");
-
-    	
+    	//File input = new File("E:\\Project Findout Linkedin user Email address\\saved pages\\company_people_Search _ LinkedIn1.html");
     	
     	  doc = Jsoup.parse(input, "UTF-8", "https://www.linkedin.com/");
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	  /*
       String pageSource = doc.html(); 
       PeopleList peopleList = new PeopleList("dnet", pageSource);
       peopleList.takeList();
+      */
+      
+      String pageSource = doc.html(); 
+      ExtractProfileInfo extractProfileInfo = new ExtractProfileInfo();
+      extractProfileInfo.extractInfo(pageSource);
+      
+    	  
       //companyInfo();
       //takeDatafromProfile();
         System.out.println("- - success - -");

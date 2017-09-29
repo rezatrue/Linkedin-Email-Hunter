@@ -33,34 +33,36 @@ public class ExtractProfileInfo {
 
         System.out.println("name :" + firstname + " " +lastname);
         
+        String company = "";
+        String designation = "";
         // designation with company name
         Element position = doc.select("h2.pv-top-card-section__headline").first();
-        String designation = position.text();
-        if (designation.toLowerCase().contains("at")){
-        	designation = designation.substring(0, designation.indexOf("at"));
-            person.setCompany(designation.substring(designation.indexOf(" at")+3, designation.length()));
-            System.out.println("copmany - :" + designation.substring(designation.indexOf(" at")+3, designation.length()));
-
-        }else if (designation.toLowerCase().contains(",")){
-        	designation = designation.substring(0, designation.indexOf(","));
-            person.setCompany(designation.substring(designation.indexOf(",")+1, designation.length()));
+        String companydesignation = position.text();
+        System.out.println(companydesignation);
+        if (companydesignation.toLowerCase().contains(" at")){
+        	designation = companydesignation.substring(0, companydesignation.indexOf(" at"));
+        	company = companydesignation.substring(companydesignation.indexOf(" at")+3, companydesignation.length());
+        }else if (companydesignation.toLowerCase().contains(",")){
+        	designation = companydesignation.substring(0, companydesignation.indexOf(","));
+        	company = companydesignation.substring(companydesignation.indexOf(",")+1, companydesignation.length());  
         }
         person.setDesignation(designation);
         System.out.println("designation :" + designation);
+        System.out.println("company :" + company);
+
         
         // profile url   
         String profileUrl = "";
 		try {
 			Elements profileSection = doc.select("section.pv-contact-info__contact-type.ci-vanity-url");
 			Element select = profileSection.select("a.pv-contact-info__contact-item.pv-contact-info__contact-link").first();
-	        String link = select.attr("abs:href"); // "http://jsoup.org/"
-	        profileUrl = link;
-	        System.out.println("text" + " : " + profileUrl);
+			profileUrl = select.attr("abs:href"); // "http://jsoup.org/"
 		} catch (Exception e) {
 	        System.err.println("error :" + e.getMessage());
 		}
 		person.setProfileUrl(profileUrl);
-		
+        System.out.println("profile link" + " : " + profileUrl);
+
 		// website   
         String website = "";
 		try {
@@ -72,12 +74,12 @@ public class ExtractProfileInfo {
 				website = website + element.text() + " ";
 			}
 			website = website.trim();
-	        System.out.println("websites" + " : " + website);
 		} catch (Exception e) {
 	        System.err.println("error :" + e.getMessage());
 		}
 		person.setWebsite(website);
-        
+        System.out.println("websites" + " : " + website);
+
         
      //String linkMail = selectMail.attr("abs:href"); // "http://jsoup.org/"
 	// profile public email  
@@ -95,22 +97,19 @@ public class ExtractProfileInfo {
 		e.printStackTrace();
 	}
      person.setEmail(email);   
-        
+     System.out.println("email" + " : " + email);
+   
         
      // profile image url
+     String image = "";
         Elements profileImage = doc.select("div.pv-top-card-section__photo-wrapper.EntityPhoto-circle-8");
         Element selectImage = profileImage.select("img.pv-top-card-section__image").first();
-        // String textMail = selectMail.text(); 
-        String linkImage = selectImage.attr("src"); 
-        //String imageId = linkImage.substring(linkImage.lastIndexOf("/")+1, linkImage.length());
-        //String image = "https://media.licdn.com/mpr/mpr/shrinknp_400_400/"+ imageId;
-        String image = linkImage;
+        image = selectImage.attr("src"); 
         person.setImage(image);
         System.out.println("Image" + " : " + image);
         
         //https://media.licdn.com/mpr/mpr/shrink_100_100/p/1/000/0ea/035/1a81184.png
     String compLiskedinPage = "";    
-    String company = "";
 	String companylogo = "";
 	try {
 		// company image url
@@ -137,18 +136,20 @@ public class ExtractProfileInfo {
 		    Element companyImage = exprience.select("img.lazy-image.pv-entity__logo-img.pv-entity__logo-img.EntityPhoto-square-5.loaded").first();  
 		    System.out.println(" company Image : " + companyImage);
 		    
-		    String compImage = companyImage.attr("src"); 
-		    String compName = companyImage.attr("alt"); 
-		    company = compName;
+		    companylogo = companyImage.attr("src"); 
+		    if(company!="") company = companyImage.attr("alt"); 
 		    
-		    companylogo = compImage;
 	} catch (Exception e) {
 		// TODO Auto-generated catch block
 		e.printStackTrace();
 	}
     person.setCompanylinkedinpage(compLiskedinPage);  
-      person.setCompanylogo(companylogo);  
-      if(company!="")person.setCompany(company);  
+    person.setCompanylogo(companylogo);  
+    person.setCompany(company);  
+    System.out.println("compLiskedinPage" + " : " + compLiskedinPage);
+    System.out.println("companylogo" + " : " + companylogo);
+    System.out.println("company" + " : " + company);
+
      
       return person;
 	}

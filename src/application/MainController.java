@@ -3,6 +3,7 @@ package application;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Optional;
 import java.util.ResourceBundle;
@@ -27,7 +28,7 @@ import javafx.scene.image.ImageViewBuilder;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 import webhandler.ChromeOperator;
-import webhandler.PeopleList;
+import webhandler.EmployeList;
 
 public class MainController implements Initializable{
 	@FXML private TextField firstNameTF;
@@ -55,27 +56,42 @@ public class MainController implements Initializable{
 	private ChromeOperator  chromeOperator;
 	
 	@FXML private Label designationL;
+	@FXML private TextField compamyNameTF;
 	@FXML private TextField linkedinCompamyPageTF;
 	@FXML private Button companyInfotBtn;
 	
 	// need to add pop alert 
 	private void popupErrorMassage(String msg){
-		
+		System.out.println("------- >>>> "+ msg +"  <<<< -------");
 	}
 	
 	public void open(){
-		String msg = chromeOperator.openBrowserLogin();
-		if(msg!="") popupErrorMassage(msg);
+		if(chromeOperator==null){
+			chromeOperator = new ChromeOperator();
+			if(chromeOperator.openChromewithSelenium()){
+				chromeOperator.openpage("https://www.linkedin.com");
+				if(!chromeOperator.loginLinkedinAccount())
+					popupErrorMassage("unable to login");
+				openBrowserBtn.setText("Close");
+			}else 
+				popupErrorMassage("unable to open browser");
+			
+		}else{
+			// need to add an Alert before close browser
+			chromeOperator.openpage("https://www.linkedin.com/m/logout/");
+			chromeOperator.close();
+			chromeOperator = null;
+			openBrowserBtn.setText("Open");
+		}
 	}
 	
-	// comment must be removed in live 
 	private void openUrl(){
 		String url = prifileUrlTF.getText().toString().trim();
-//		if(!(url.toLowerCase().startsWith("https://www.linkedin.com/"))) 
-//			popupErrorMassage("Invalid URL");
-//		else{
+		if(!(url.toLowerCase().startsWith("https://www.linkedin.com/"))) 
+			popupErrorMassage("Invalid URL");
+		else{
 			sourceCode = chromeOperator.openProfile(url);
-//		}
+		}
 	}
 	
 	
@@ -91,6 +107,7 @@ public class MainController implements Initializable{
 		engineProfile.load(person.getImage());
 		engineLogo.load(person.getCompanylogo());
 		designationL.setText(person.getDesignation());
+		compamyNameTF.setText(person.getCompany());
 		linkedinCompamyPageTF.setText(person.getCompanylinkedinpage());
 		person.toString();
 	}
@@ -108,30 +125,23 @@ public class MainController implements Initializable{
 		clearScreen();
 		openUrl();
 		setProfile();
-		
 		// https://www.linkedin.com/in/yaronzoller/
-		
 	}
 	
 	
 	
 	public void companyInfo(){
-		if(person.getCompanylinkedinpage()!= null)
-			chromeOperator.openCompanypage(person.getCompanylinkedinpage());
-		else{
-			System.out.println("taking url from ttext filed");
-			chromeOperator.openCompanypage(linkedinCompamyPageTF.getText());
-		}
-		System.out.println("----");
-		//chromeOperator.companyEmplyeListPage();
+		if(linkedinCompamyPageTF.getText().isEmpty())
+			linkedinCompamyPageTF.setText(person.getCompanylinkedinpage());
+		chromeOperator.openpage(linkedinCompamyPageTF.getText());
 		String source = chromeOperator.takeListSource();
-		PeopleList peoplelist = new PeopleList("", source);
-		peoplelist.takeList();
-		System.out.println("----");
-		chromeOperator.nextEmplyeeListPage();
-//		source = chromeOperator.takeListSource();
-//		peoplelist = new PeopleList("",source);
-//		peoplelist.takeList();	
+		EmployeList employeList = new EmployeList(compamyNameTF.getText(), source);
+		ArrayList<String> list = employeList.takeList();
+		Iterator it = list.iterator();
+		for (String string : list) {
+			System.out.println(string);
+		}
+//		chromeOperator.nextEmplyeeListPage();
 		
 	}
 
@@ -199,7 +209,7 @@ public class MainController implements Initializable{
 			for (String string : permutatemails) {
 				sb.append(string + "\n");
 			}
-			listTA.setText(sb.toString());
+			listTA.appendText(sb.toString());
 		}
 	
 		System.out.println("" + firstName+ " " + lastName + " "+ webUrl);
@@ -208,7 +218,7 @@ public class MainController implements Initializable{
 	
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
-		chromeOperator = new ChromeOperator();
+		chromeOperator = null;
 		person = new Person();
 		listTA.setText("");
 		engineProfile = profileWV.getEngine();

@@ -2,6 +2,7 @@ package webhandler;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.function.Function;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -13,6 +14,8 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.support.ui.Wait;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import data.Person;
 
@@ -23,19 +26,8 @@ public class ChromeOperator {
 	public ChromeOperator() {
 	}
 	
-	public String openBrowserLogin(){
-		if(!openChromewithSelenium())
-			return "Unable to Open Browser";
-		else {
-			driver.get("https://www.linkedin.com");		
-			if(!loginLinkedinAccount())
-				return "Unable to Login";
-		}
-        System.out.println("login - success");
-        return "";
-	}
-	
-	private boolean openChromewithSelenium(){
+
+	public boolean openChromewithSelenium(){
 		/*
 		System.setProperty("webdriver.chrome.driver", "../Linkedin Email Hunter/resources/chromedriver.exe");
         WebDriver driver = new ChromeDriver();
@@ -56,11 +48,9 @@ public class ChromeOperator {
 			return false;
 		}
 		
-        
-        
-		}
+	}
 
-	private boolean loginLinkedinAccount(){
+	public boolean loginLinkedinAccount(){
 		
 		try {
 //			driver.findElement(By.cssSelector("input#login-email.login-email")).sendKeys("bennye45@oaudienceij.com");
@@ -78,11 +68,18 @@ public class ChromeOperator {
 
 	}
 
-	
-	public String openCompanypage(String url){
+	public String openpage(String url){
 		driver.get(url);
-		return ""; //driver.findElement(By.cssSelector("a.org-about-us-company-module__website.mb3.link-without-visited-state.ember-view")).getAttribute("href").toString();
+		waitForPageLoad();
+		return ""; 
 	}
+	
+	
+//	public String openCompanypage(String url){
+//		driver.get(url);
+//		
+//		return ""; //driver.findElement(By.cssSelector("a.org-about-us-company-module__website.mb3.link-without-visited-state.ember-view")).getAttribute("href").toString();
+//	}
 	
 	public String companyEmplyeListPage(){
 		driver.findElement(By.cssSelector("a.org-company-employees-snackbar__details-highlight.snackbar-description-see-all-link.link-without-visited-state.ember-view")).click();
@@ -92,7 +89,14 @@ public class ChromeOperator {
 	public String takeListSource(){
 		
 		driver.findElement(By.cssSelector("a.org-company-employees-snackbar__details-highlight.snackbar-description-see-all-link.link-without-visited-state.ember-view")).click();
-		
+		waitForPageLoad();
+		JavascriptExecutor js = (JavascriptExecutor) driver;
+		js.executeScript("scrollBy(0,1050)");
+		js.executeScript("scrollBy(0,1150)");
+		js.executeScript("scrollBy(0,1250)");
+		js.executeScript("scrollBy(0,1350)");
+		js.executeScript("scrollBy(0,1450)");
+		waitForPageLoad();
         String pageSource = driver.getPageSource();
 
 		return pageSource; 
@@ -111,10 +115,12 @@ public class ChromeOperator {
 		
         driver.findElement(By.cssSelector("button.contact-see-more-less.link-without-visited-state")).click();
 		// if this don't perfrom well try saving page first
-        // this is not fullprofe way try savaing the page first
+        // this is not full profile way try savaing the page first
 		JavascriptExecutor js = (JavascriptExecutor) driver;
+		js.executeScript("scrollBy(0,850)");
+		waitForPageLoad();
 		js.executeScript("scrollBy(0,1050)");
-		js.executeScript("scrollBy(0,1150)");
+		waitForPageLoad();
 
         //String yourtext= driver.findElement(By.tagName("body")).getText() ;
         
@@ -123,6 +129,23 @@ public class ChromeOperator {
 		return pageSource;
 	}
 
+	private void waitForPageLoad() {
+		// https://stackoverflow.com/questions/5868439/wait-for-page-load-in-selenium
+	    Wait<WebDriver> wait = new WebDriverWait(driver, 30);
+	    wait.until(new Function<WebDriver, Boolean>() {
+	        public Boolean apply(WebDriver driver) {
+	            System.out.println("Current Window State       : "
+	                + String.valueOf(((JavascriptExecutor) driver).executeScript("return document.readyState")));
+	            return String
+	                .valueOf(((JavascriptExecutor) driver).executeScript("return document.readyState"))
+	                .equals("complete");
+	        }
+	    });
+	}
+
+	public void close() {
+		driver.close();
+	}
 	
 	
 }
