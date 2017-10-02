@@ -8,6 +8,7 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -29,7 +30,7 @@ public class TestRun {
         
       try {
     	// saved profile page  
-  		File input = new File("E:\\Project Findout Linkedin user Email address\\saved pages\\Nabila Tajrin _ LinkedIn.html");
+  		//File input = new File("E:\\Project Findout Linkedin user Email address\\saved pages\\Nabila Tajrin _ LinkedIn.html");
   		//File input = new File("E:\\Project Findout Linkedin user Email address\\saved pages\\Yaron J. Zoller, DBA _ LinkedIn.html");
   		
     	  // saved company page 
@@ -39,7 +40,7 @@ public class TestRun {
     	//File input = new File("E:\\Project Findout Linkedin user Email address\\saved pages\\Monotype_ Overview _ LinkedIn.html");
   
     	 // saved company list page 
-    	//File input = new File("E:\\Project Findout Linkedin user Email address\\saved pages\\company_people_Search _ LinkedIn1.html");
+    	File input = new File("E:\\Project Findout Linkedin user Email address\\saved pages\\company_people_Search _ LinkedIn1.html");
     	//File input = new File("E:\\Project Findout Linkedin user Email address\\saved pages\\(2) Search _ LinkedIn.html");
     	//File input = new File("E:\\Project Findout Linkedin user Email address\\saved pages\\company_people_Search _ LinkedIn1.html");
     	
@@ -53,11 +54,12 @@ public class TestRun {
       PeopleList peopleList = new PeopleList("dnet", pageSource);
       peopleList.takeList();
       */
-      
-      String pageSource = doc.html(); 
-      ExtractProfileInfo extractProfileInfo = new ExtractProfileInfo();
-      extractProfileInfo.extractInfo(pageSource);
-      
+      openChromewithSelenium();
+      driver.get("E:\\Project Findout Linkedin user Email address\\saved pages\\company_people_Search _ LinkedIn8.html");		
+
+      String pageNumberCss ="li.page-list li.active";
+		int number = Integer.valueOf(driver.findElement(By.cssSelector(pageNumberCss)).getText());
+		System.out.println(number);
     	  
       //companyInfo();
       //takeDatafromProfile();
@@ -192,6 +194,7 @@ public class TestRun {
         System.out.println("eEmplyePage : " +  eEmplyePage.attr("href"));
 
 	}
+
 	public static void takeDatafromProfile(){
 		/*
 		// work in live

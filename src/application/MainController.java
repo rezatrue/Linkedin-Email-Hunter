@@ -62,6 +62,12 @@ public class MainController implements Initializable{
 	@FXML private TextField linkedinCompamyPageTF;
 	@FXML private Button companyInfotBtn;
 	
+	@FXML private TextField currentPageTF;
+	@FXML private TextField targetPageTF;
+	@FXML private Button prevPageBtn;
+	@FXML private Button nextPageBtn;
+
+	
 	// need to add pop alert 
 	private void popupErrorMassage(String msg){
 		System.out.println("------- >>>> "+ msg +"  <<<< -------");
@@ -131,14 +137,42 @@ public class MainController implements Initializable{
 	}
 	
 	
+	public void gotonextPage(){
+		int num = chromeOperator.nextEmplyeeListPage();
+		if(num== -1)
+			popupErrorMassage("Error opening next page");
+		else
+			currentPageTF.setText(String.valueOf(num));
+	}
+	
+	public void gotoprevPage(){
+		int num = chromeOperator.prevEmplyeeListPage();
+		if(num== -1)
+			popupErrorMassage("Error opening prev page");
+		else
+			currentPageTF.setText(String.valueOf(num));
+	}
+	
 	
 	public void companyInfo(){
-		if(linkedinCompamyPageTF.getText().isEmpty())
-			linkedinCompamyPageTF.setText(person.getCompanylinkedinpage());
-		chromeOperator.openpage(linkedinCompamyPageTF.getText());
+		String pageUrl = chromeOperator.getPageUrl();
+		if(!pageUrl.toLowerCase().contains("search/results/people/")){
+			if(linkedinCompamyPageTF.getText().isEmpty()){
+				String compurl = person.getCompanylinkedinpage();
+				linkedinCompamyPageTF.setText(compurl);
+			}
+			chromeOperator.openpage(linkedinCompamyPageTF.getText());
+		}
+		
 		String source = chromeOperator.takeListSource();
+		emplyeeData(source);
+		chromeOperator.openpage(pageUrl);
+	}
+	
+	private void emplyeeData(String source){
 		EmployeList employeList = new EmployeList(compamyNameTF.getText(), source);
 		ArrayList<String> list = employeList.takeList();
+		
 		System.out.println(list.size());
 		
 		Iterator it = list.iterator();
@@ -150,8 +184,6 @@ public class MainController implements Initializable{
 			System.out.println(person.getFirstname() + " " + person.getLastname()
 					+ person.getEmail());
 		}
-		
-//		chromeOperator.nextEmplyeeListPage();
 	}
 
 	public void listTakeIn(){
@@ -230,9 +262,9 @@ public class MainController implements Initializable{
 		extractProfileInfo = new ExtractProfileInfo();
 		chromeOperator = null;
 		person = new Person();
-		listTA.setText("");
 		engineProfile = profileWV.getEngine();
 		engineLogo = logoWV.getEngine();
+		listTA.setText("");
 	}
 	
 }

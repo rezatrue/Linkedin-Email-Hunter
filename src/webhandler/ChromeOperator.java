@@ -11,6 +11,7 @@ import org.jsoup.select.Elements;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -71,7 +72,8 @@ public class ChromeOperator {
 
 	public String openpage(String url){
 		driver.get(url);
-		waitForPageLoad();
+		//waitForPageLoad();
+		scrollDown();
 		return ""; 
 	}
 	
@@ -91,22 +93,63 @@ public class ChromeOperator {
 		
 		driver.findElement(By.cssSelector("a.org-company-employees-snackbar__details-highlight.snackbar-description-see-all-link.link-without-visited-state.ember-view")).click();
 		waitForPageLoad();
+		scrollDown();
+        String pageSource = driver.getPageSource();
+		return pageSource; 
+		}
+	
+	public String getPageUrl(){
+		return driver.getCurrentUrl();
+	}
+	
+	public int nextEmplyeeListPage(){
+		String nextPageCss = "button.next"; 
+		if(!elementExsist(nextPageCss))
+			return -1;
+		driver.findElement(By.cssSelector(nextPageCss)).click();
+		scrollDown();
+		return currentPageNumber();
+		}
+	private int currentPageNumber(){
+		String pageNumberCss = "li.page-list li.active";
+		if(!elementExsist(pageNumberCss))
+			return -1;
+		int number;
+		try {
+			number = Integer.valueOf(driver.findElement(By.cssSelector(pageNumberCss)).getText());
+		} catch (NumberFormatException e) {
+			number = -1;
+		}
+		return number;
+	}
+	
+	private boolean elementExsist(String cssSelector){
+		try {
+			driver.findElement(By.cssSelector(cssSelector));
+			return true;
+		} catch (NoSuchElementException  e) {
+			return false;
+		}
+		
+	}
+	
+ 	public int prevEmplyeeListPage(){
+ 		String nextPageCss = "button.prev"; 
+		if(!elementExsist(nextPageCss))
+			return -1;
+		driver.findElement(By.cssSelector(nextPageCss)).click();
+		scrollDown();
+		return currentPageNumber();
+		}
+
+	private void scrollDown(){
 		int count = 0;
 		// scroll down to load page properly
 		while(count < 100){
 			driver.findElement(By.cssSelector("body")).sendKeys(Keys.ARROW_DOWN);
 			count++;
 		}
-        String pageSource = driver.getPageSource();
-		return pageSource; 
-		}
-	
-	public String nextEmplyeeListPage(){
-		driver.findElement(By.cssSelector("button.next")).click();
-		return ""; 
-		}
-
-		
+	}
 	
 	
 	public String openProfile(String purl){

@@ -9,13 +9,13 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.web.WebView?>
 
-<AnchorPane prefHeight="344.0" prefWidth="633.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.MainController">
+<AnchorPane prefHeight="380.0" prefWidth="633.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.MainController">
    <children>
-      <Button layoutX="156.0" layoutY="56.0" mnemonicParsing="false" onAction="#varifyEmails" prefHeight="25.0" prefWidth="80.0" text="Varify" />
-      <TextField fx:id="firstNameTF" layoutX="243.0" layoutY="90.0" promptText="First Name" />
-      <Label layoutX="155.0" layoutY="91.0" prefHeight="25.0" prefWidth="88.0" text=" Frist Name" />
-      <Label layoutX="155.0" layoutY="124.0" prefHeight="25.0" prefWidth="88.0" text=" Last Name" />
-      <TextField fx:id="lastNameTF" layoutX="243.0" layoutY="124.0" promptText="Last Name" />
+      <Button layoutX="156.0" layoutY="59.0" mnemonicParsing="false" onAction="#varifyEmails" prefHeight="25.0" prefWidth="80.0" text="Varify" />
+      <TextField fx:id="firstNameTF" layoutX="243.0" layoutY="94.0" promptText="First Name" />
+      <Label layoutX="155.0" layoutY="95.0" prefHeight="25.0" prefWidth="88.0" text=" Frist Name" />
+      <Label layoutX="155.0" layoutY="129.0" prefHeight="25.0" prefWidth="88.0" text=" Last Name" />
+      <TextField fx:id="lastNameTF" layoutX="243.0" layoutY="129.0" promptText="Last Name" />
       <StackPane layoutX="19.0" layoutY="21.0" prefHeight="121.0" prefWidth="124.0">
          <children>
             <WebView fx:id="profileWV" prefHeight="130.0" prefWidth="133.0" />
@@ -25,24 +25,28 @@
          <font>
             <Font size="9.0" />
          </font></Label>
-      <StackPane layoutX="14.0" layoutY="230.0" prefHeight="92.0" prefWidth="124.0">
+      <StackPane layoutX="14.0" layoutY="249.0" prefHeight="105.0" prefWidth="124.0">
          <children>
-            <WebView fx:id="logoWV" prefHeight="71.0" prefWidth="100.0" />
+            <WebView fx:id="logoWV" prefHeight="48.0" prefWidth="124.0" />
          </children>
       </StackPane>
-      <Label layoutX="164.0" layoutY="160.0" prefHeight="25.0" prefWidth="71.0" text=" Web URL" />
-      <TextField fx:id="webUrlTF" layoutX="243.0" layoutY="160.0" promptText="website" />
+      <Label layoutX="164.0" layoutY="166.0" prefHeight="25.0" prefWidth="71.0" text=" Web URL" />
+      <TextField fx:id="webUrlTF" layoutX="243.0" layoutY="166.0" promptText="website" />
       <Label layoutX="155.0" layoutY="24.0" prefHeight="25.0" prefWidth="88.0" text="Email Address" />
       <TextField fx:id="emailTF" layoutX="243.0" layoutY="24.0" />
-      <Button fx:id="openBrowserBtn" layoutX="160.0" layoutY="265.0" mnemonicParsing="false" onAction="#open" prefHeight="25.0" prefWidth="64.0" text="Open" />
-      <Button layoutX="247.0" layoutY="265.0" mnemonicParsing="false" onAction="#start" prefHeight="25.0" prefWidth="64.0" text="Start" />
-      <TextField fx:id="prifileUrlTF" layoutX="155.0" layoutY="298.0" prefHeight="25.0" prefWidth="237.0" promptText="profile URL" />
-      <TextArea fx:id="listTA" layoutX="413.0" layoutY="16.0" prefHeight="309.0" prefWidth="200.0" />
-      <Button layoutX="242.0" layoutY="196.0" mnemonicParsing="false" onAction="#generateEmail" prefHeight="25.0" prefWidth="149.0" text="Generate Email" />
-      <Button layoutX="259.0" layoutY="56.0" mnemonicParsing="false" onAction="#listTakeOut" prefHeight="25.0" prefWidth="47.0" text="&gt;&gt;&gt;" />
-      <Button layoutX="331.0" layoutY="56.0" mnemonicParsing="false" onAction="#listTakeIn" prefHeight="25.0" prefWidth="47.0" text="&lt;&lt;&lt;" />
-      <TextField fx:id="linkedinCompamyPageTF" layoutX="12.0" layoutY="196.0" prefHeight="25.0" prefWidth="215.0" promptText="linkedin Company Page" />
-      <Button layoutX="331.0" layoutY="265.0" mnemonicParsing="false" onAction="#companyInfo" prefHeight="25.0" prefWidth="64.0" text="Company" />
-      <TextField fx:id="compamyNameTF" layoutX="13.0" layoutY="164.0" prefHeight="25.0" prefWidth="136.0" promptText="Company Name" />
+      <Button fx:id="openBrowserBtn" layoutX="168.0" layoutY="296.0" mnemonicParsing="false" onAction="#open" prefHeight="25.0" prefWidth="64.0" text="Open" />
+      <Button layoutX="308.0" layoutY="296.0" mnemonicParsing="false" onAction="#start" prefHeight="25.0" prefWidth="64.0" text="Start" />
+      <TextField fx:id="prifileUrlTF" layoutX="155.0" layoutY="331.0" prefHeight="25.0" prefWidth="237.0" promptText="profile URL" />
+      <TextArea fx:id="listTA" layoutX="413.0" layoutY="23.0" prefHeight="297.0" prefWidth="200.0" />
+      <Button layoutX="242.0" layoutY="209.0" mnemonicParsing="false" onAction="#generateEmail" prefHeight="25.0" prefWidth="149.0" text="Generate Email" />
+      <Button layoutX="259.0" layoutY="59.0" mnemonicParsing="false" onAction="#listTakeOut" prefHeight="25.0" prefWidth="47.0" text="&gt;&gt;&gt;" />
+      <Button layoutX="331.0" layoutY="59.0" mnemonicParsing="false" onAction="#listTakeIn" prefHeight="25.0" prefWidth="47.0" text="&lt;&lt;&lt;" />
+      <TextField fx:id="linkedinCompamyPageTF" layoutX="12.0" layoutY="209.0" prefHeight="25.0" prefWidth="215.0" promptText="linkedin Company Page" />
+      <Button layoutX="151.0" layoutY="249.0" mnemonicParsing="false" onAction="#companyInfo" prefHeight="25.0" prefWidth="80.0" text="Company" />
+      <TextField fx:id="compamyNameTF" layoutX="13.0" layoutY="170.0" prefHeight="25.0" prefWidth="136.0" promptText="Company Name" />
+      <TextField fx:id="currentPageTF" layoutX="283.0" layoutY="249.0" prefHeight="25.0" prefWidth="33.0" />
+      <TextField fx:id="targetPageTF" layoutX="363.0" layoutY="249.0" prefHeight="25.0" prefWidth="33.0" />
+      <Button layoutX="243.0" layoutY="249.0" mnemonicParsing="false" onAction="#gotoprevPage" prefHeight="25.0" prefWidth="33.0" text="&lt;&lt;" />
+      <Button layoutX="323.0" layoutY="249.0" mnemonicParsing="false" onAction="#gotonextPage" prefHeight="25.0" prefWidth="33.0" text="&gt;&gt;" />
    </children>
 </AnchorPane>
