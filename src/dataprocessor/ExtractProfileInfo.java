@@ -94,8 +94,10 @@ public class ExtractProfileInfo {
         
      // profile image url
      	String image = "";
-        Elements profileImage = doc.select("div.pv-top-card-section__photo-wrapper.EntityPhoto-circle-8");
-        Element selectImage = profileImage.select("img.pv-top-card-section__image").first();
+        Elements profileImage = doc.select("div.presence-entity.pv-top-card-section__image.presence-entity--size-8.ember-view");
+        //Elements profileImage = doc.select("div.pv-top-card-section__photo-wrapper.EntityPhoto-circle-8");
+        //Element selectImage = profileImage.select("img.pv-top-card-section__image.EntityPhoto-circle-8").first();
+        Element selectImage = profileImage.select("img.presence-entity__image.EntityPhoto-circle-8").first();
         if(selectImage!=null)image = selectImage.attr("src"); 
         person.setImage(image);
         //System.out.println("Image" + " : " + image);

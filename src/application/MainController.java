@@ -134,6 +134,7 @@ public class MainController implements Initializable{
 		openUrl();
 		setProfile();
 		// https://www.linkedin.com/in/yaronzoller/
+		// https://www.linkedin.com/in/nabila-tajrin-187aab84/
 	}
 	
 	
