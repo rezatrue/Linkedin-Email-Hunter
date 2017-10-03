@@ -142,8 +142,16 @@ public class MainController implements Initializable{
 		int num = chromeOperator.nextEmplyeeListPage();
 		if(num== -1)
 			popupErrorMassage("Error opening next page");
-		else
-			currentPageTF.setText(String.valueOf(num));
+		else 
+			pageProcessing(num);
+	}
+	
+	private void pageProcessing(int num){
+		currentPageTF.setText(String.valueOf(num));
+		String url = chromeOperator.getPageUrl();
+		String source = chromeOperator.takeListSource();
+		emplyeeData(source);
+		chromeOperator.openpage(url);
 	}
 	
 	public void gotoprevPage(){
@@ -151,23 +159,25 @@ public class MainController implements Initializable{
 		if(num== -1)
 			popupErrorMassage("Error opening prev page");
 		else
-			currentPageTF.setText(String.valueOf(num));
+			pageProcessing(num);
 	}
 	
 	
+	
 	public void companyInfo(){
-		String pageUrl = chromeOperator.getPageUrl();
-		if(!pageUrl.toLowerCase().contains("search/results/people/")){
-			if(linkedinCompamyPageTF.getText().isEmpty()){
-				String compurl = person.getCompanylinkedinpage();
-				linkedinCompamyPageTF.setText(compurl);
-			}
-			chromeOperator.openpage(linkedinCompamyPageTF.getText());
+		if(linkedinCompamyPageTF.getText().isEmpty()){
+			String compurl = person.getCompanylinkedinpage();
+			linkedinCompamyPageTF.setText(compurl);
 		}
-		
-		String source = chromeOperator.takeListSource();
-		emplyeeData(source);
-		chromeOperator.openpage(pageUrl);
+		if(!linkedinCompamyPageTF.getText().contains("https://www.linkedin.com/company")){
+			popupErrorMassage("Invalid company URL");
+		}else{
+			chromeOperator.openpage(linkedinCompamyPageTF.getText());
+			String source = chromeOperator.clicktakeListSource();
+			String pageUrl = chromeOperator.getPageUrl();
+			emplyeeData(source);
+			chromeOperator.openpage(pageUrl);
+		}
 	}
 	
 	private void emplyeeData(String source){

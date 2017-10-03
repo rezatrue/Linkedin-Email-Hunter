@@ -41,7 +41,7 @@ public class ExtractProfileInfo {
         String companydesignation=""; 
         if(position!=null) companydesignation = position.text();
         //System.out.println(companydesignation);
-        if (companydesignation.toLowerCase().contains(" at")){
+        if (companydesignation.toLowerCase().contains(" at ")){
         	designation = companydesignation.substring(0, companydesignation.indexOf(" at"));
         	company = companydesignation.substring(companydesignation.indexOf(" at")+3, companydesignation.length());
         }else if (companydesignation.toLowerCase().contains(",")){

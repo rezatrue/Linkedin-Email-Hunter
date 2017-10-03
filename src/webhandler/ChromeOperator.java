@@ -72,8 +72,10 @@ public class ChromeOperator {
 
 	public String openpage(String url){
 		driver.get(url);
-		//waitForPageLoad();
-		scrollDown();
+		waitForPageLoad();
+		// it needed for profile page only
+		if(url.toLowerCase().startsWith("https://www.linkedin.com/search/results/people/"))
+			scrollDown();
 		return ""; 
 	}
 	
@@ -89,13 +91,19 @@ public class ChromeOperator {
 		return ""; 
 		}
 	
+	
 	public String takeListSource(){
+		
+        String pageSource = driver.getPageSource();
+		return pageSource; 
+		}
+	
+	public String clicktakeListSource(){
 		
 		driver.findElement(By.cssSelector("a.org-company-employees-snackbar__details-highlight.snackbar-description-see-all-link.link-without-visited-state.ember-view")).click();
 		waitForPageLoad();
 		scrollDown();
-        String pageSource = driver.getPageSource();
-		return pageSource; 
+		return takeListSource(); 
 		}
 	
 	public String getPageUrl(){
