@@ -44,8 +44,8 @@
       <TextField fx:id="linkedinCompamyPageTF" layoutX="12.0" layoutY="209.0" prefHeight="25.0" prefWidth="215.0" promptText="linkedin Company Page" />
       <Button layoutX="151.0" layoutY="249.0" mnemonicParsing="false" onAction="#companyInfo" prefHeight="25.0" prefWidth="80.0" text="Company" />
       <TextField fx:id="compamyNameTF" layoutX="13.0" layoutY="170.0" prefHeight="25.0" prefWidth="136.0" promptText="Company Name" />
-      <TextField fx:id="currentPageTF" layoutX="283.0" layoutY="249.0" prefHeight="25.0" prefWidth="33.0" />
-      <TextField fx:id="targetPageTF" layoutX="363.0" layoutY="249.0" prefHeight="25.0" prefWidth="33.0" />
+      <TextField fx:id="currentPageTF" layoutX="283.0" layoutY="249.0" prefHeight="25.0" prefWidth="33.0" text="1" />
+      <TextField fx:id="targetPageTF" layoutX="363.0" layoutY="249.0" prefHeight="25.0" prefWidth="33.0" text="0" />
       <Button layoutX="243.0" layoutY="249.0" mnemonicParsing="false" onAction="#gotoprevPage" prefHeight="25.0" prefWidth="33.0" text="&lt;&lt;" />
       <Button layoutX="323.0" layoutY="249.0" mnemonicParsing="false" onAction="#gotonextPage" prefHeight="25.0" prefWidth="33.0" text="&gt;&gt;" />
    </children>
