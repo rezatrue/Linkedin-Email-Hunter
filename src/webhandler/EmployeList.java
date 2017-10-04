@@ -27,9 +27,11 @@ public class EmployeList {
 		for (Element element : liste) {
 
 			String comName = element.select("p.search-result__snippets.mt2.ember-view").text();
+			String designation = element.select("p.subline-level-1.search-result__truncate").text();
+			
 			System.out.println(comName +" ---  ");
 			// if company named match than we will add link to the list
-			if(comName.toLowerCase().contains(company)){
+			if(comName.toLowerCase().contains(company) || designation.toLowerCase().contains(company)){
 
 				String url = element.select("a.search-result__result-link.ember-view").attr("abs:href");
 				System.out.println(url);
