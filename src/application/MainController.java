@@ -27,6 +27,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.image.ImageViewBuilder;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
+import socialmedia.TwitterSearch;
 import webhandler.ChromeOperator;
 import webhandler.EmployeList;
 
@@ -67,6 +68,7 @@ public class MainController implements Initializable{
 	@FXML private Button prevPageBtn;
 	@FXML private Button nextPageBtn;
 
+	@FXML private Button twitterBtn;
 	
 	// need to add pop alert 
 	private void popupErrorMassage(String msg){
@@ -267,6 +269,11 @@ public class MainController implements Initializable{
 		System.out.println("" + firstName+ " " + lastName + " "+ webUrl);
 	}
 	
+	
+	public void twitterCall(){
+		TwitterSearch twitterSearch = new TwitterSearch();
+		twitterSearch.serach("Ali Reza");
+	}
 	
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
