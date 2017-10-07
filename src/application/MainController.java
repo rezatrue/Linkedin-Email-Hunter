@@ -272,14 +272,10 @@ public class MainController implements Initializable{
 	
 	public void twitterCall(){
 		TwitterSearch twitterSearch = new TwitterSearch();
-		twitterSearch.serach("Ali Reza");
+		twitterSearch.serach("ali","reza");
 	}
 	
-	public String selectUser(){
-		
-		
-		return "";
-	}
+	
 	
 	
 	@Override
