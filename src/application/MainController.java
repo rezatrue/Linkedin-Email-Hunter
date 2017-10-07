@@ -275,6 +275,13 @@ public class MainController implements Initializable{
 		twitterSearch.serach("Ali Reza");
 	}
 	
+	public String selectUser(){
+		
+		
+		return "";
+	}
+	
+	
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		extractProfileInfo = new ExtractProfileInfo();
