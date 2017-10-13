@@ -20,6 +20,18 @@ public class Main extends Application {
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
+		
+		try {
+			Parent parent = FXMLLoader.load(getClass().getResource("/application/Login.fxml"));
+			Stage stage = new Stage();
+			stage.setTitle("Please login");
+			stage.setScene(new Scene(parent));
+			stage.show();
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+		
 	}
 	
 	public static void main(String[] args) {

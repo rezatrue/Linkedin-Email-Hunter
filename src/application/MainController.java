@@ -14,7 +14,10 @@ import dataprocessor.ExtractProfileInfo;
 import dataprocessor.MailBoxValidator;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
@@ -27,6 +30,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.image.ImageViewBuilder;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
+import javafx.stage.Stage;
 import socialmedia.TwitterSearch;
 import webhandler.ChromeOperator;
 import webhandler.EmployeList;
@@ -269,13 +273,30 @@ public class MainController implements Initializable{
 		System.out.println("" + firstName+ " " + lastName + " "+ webUrl);
 	}
 	
-	
-	public void twitterCall(){
-		TwitterSearch twitterSearch = new TwitterSearch();
-		twitterSearch.serach("ali","reza");
+	private void twitterlistwindow(){
+		
+		try {
+			//Parent parent = FXMLLoader.load(getClass().getResource("/application/TwitterList.fxml"));
+			
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/application/TwitterList.fxml"));
+            loader.getNamespace().put("fname", "Ali");
+            loader.getNamespace().put("lname", "Reza");
+            Parent parent = loader.load();
+			
+			Stage stage = new Stage();
+			stage.setTitle("Twitter");
+			stage.setScene(new Scene(parent));
+			stage.show();
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		
 	}
 	
-	
+	public void twitterCall(){
+		twitterlistwindow();
+		
+	}
 	
 	
 	@Override
@@ -286,6 +307,7 @@ public class MainController implements Initializable{
 		engineProfile = profileWV.getEngine();
 		engineLogo = logoWV.getEngine();
 		listTA.setText("");
+		
 	}
 	
 }
