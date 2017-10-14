@@ -19,16 +19,18 @@ public class TwitterListController implements Initializable{
 	@FXML private Button closeBtn;
 	private WebEngine webEngine;
 	@FXML private WebView webView;
-
+	private String fname;
+	private String lname;
 	
 	public void close(ActionEvent event){
+		
 		closeScene();
 	}
 	
 	public void search(ActionEvent event){
 		
 		TwitterSearch twitterSearch = new TwitterSearch();
-		String content = twitterSearch.serach("ali","reza");
+		String content = twitterSearch.serach(fname,lname);
 		webEngine.loadContent(content);
 		
 	}
@@ -43,6 +45,13 @@ public class TwitterListController implements Initializable{
 		// TODO Auto-generated method stub
 		webEngine = webView.getEngine();
 		
+	}
+
+
+	public void setUser(String fname, String lname) {
+		this.fname = fname;
+		this.lname = lname;
+		fullNameTF.setText(fname +" "+ lname);
 	}
 
 }

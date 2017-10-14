@@ -74,6 +74,7 @@ public class MainController implements Initializable{
 
 	@FXML private Button twitterBtn;
 	
+	
 	// need to add pop alert 
 	private void popupErrorMassage(String msg){
 		System.out.println("------- >>>> "+ msg +"  <<<< -------");
@@ -125,6 +126,7 @@ public class MainController implements Initializable{
 		linkedinCompamyPageTF.setText(person.getCompanylinkedinpage());
 		person.toString();
 	}
+	
 	private void clearScreen(){
 		sourceCode = "";
 		firstNameTF.setText("");
@@ -167,7 +169,6 @@ public class MainController implements Initializable{
 		else
 			pageProcessing(num);
 	}
-	
 	
 	
 	public void companyInfo(){
@@ -274,15 +275,18 @@ public class MainController implements Initializable{
 	}
 	
 	private void twitterlistwindow(){
-		
+		String firstName = firstNameTF.getText().toLowerCase();
+		String lastName = lastNameTF.getText().toLowerCase();
+
+		// passing parameter while loading scene
+		//https://stackoverflow.com/questions/14370183/passing-parameters-to-a-controller-when-loading-an-fxml
 		try {
 			//Parent parent = FXMLLoader.load(getClass().getResource("/application/TwitterList.fxml"));
-			
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/application/TwitterList.fxml"));
-            loader.getNamespace().put("fname", "Ali");
-            loader.getNamespace().put("lname", "Reza");
-            Parent parent = loader.load();
-			
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/application/TwitterList.fxml"));
+            Parent parent = fxmlLoader.load();
+            TwitterListController controller = fxmlLoader.<TwitterListController>getController();
+            controller.setUser(firstName, lastName);
+           
 			Stage stage = new Stage();
 			stage.setTitle("Twitter");
 			stage.setScene(new Scene(parent));
@@ -308,6 +312,13 @@ public class MainController implements Initializable{
 		engineLogo = logoWV.getEngine();
 		listTA.setText("");
 		
+		
 	}
+	
+//	public MainController(RetrievedData retrievedData){
+//	      this.retrievedData = retrievedData;
+//	      this.retrievedData.attach(this);
+//	   }
+
 	
 }
