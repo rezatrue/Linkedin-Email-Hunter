@@ -80,6 +80,7 @@ public class MainController implements Initializable{
 		System.out.println("------- >>>> "+ msg +"  <<<< -------");
 	}
 	
+	// browser open & close + login & log out
 	public void open(){
 		if(chromeOperator==null){
 			chromeOperator = new ChromeOperator();
@@ -137,6 +138,7 @@ public class MainController implements Initializable{
 		engineLogo.load("");
 	}
 	
+	// open profile URL , clear screen previous data & set new profile into
 	public void start(){
 		clearScreen();
 		openUrl();
@@ -180,6 +182,14 @@ public class MainController implements Initializable{
 			popupErrorMassage("Invalid company URL");
 		}else{
 			chromeOperator.openpage(linkedinCompamyPageTF.getText());
+			
+			// taking web address from company page
+			if(person.getWebsite()==""){
+				String website = chromeOperator.webAddress();
+				person.setWebsite(website);
+				webUrlTF.setText(person.getWebsite());
+			}
+
 			String source = chromeOperator.clicktakeListSource();
 			String pageUrl = chromeOperator.getPageUrl();
 			emplyeeData(source);
@@ -311,14 +321,10 @@ public class MainController implements Initializable{
 		engineProfile = profileWV.getEngine();
 		engineLogo = logoWV.getEngine();
 		listTA.setText("");
-		
-		
+//		openBrowserBtn.setDisable(true); 
+//		varifyBtn.setDisable(true); 
+
 	}
 	
-//	public MainController(RetrievedData retrievedData){
-//	      this.retrievedData = retrievedData;
-//	      this.retrievedData.attach(this);
-//	   }
-
 	
 }

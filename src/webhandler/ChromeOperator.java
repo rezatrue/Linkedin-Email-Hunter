@@ -80,6 +80,15 @@ public class ChromeOperator {
 	}
 	
 	
+	public String webAddress(){
+        String sourceCode = driver.getPageSource();
+		String cssSelector = "a.org-about-us-company-module__website.mb3.link-without-visited-state.ember-view";
+		Document doc = Jsoup.parse(sourceCode);
+		String link = doc.select(cssSelector).first().text();
+		System.out.println(" - - - : "+ link);
+		return link;
+	}
+	
 //	public String openCompanypage(String url){
 //		driver.get(url);
 //		
@@ -104,7 +113,7 @@ public class ChromeOperator {
 		waitForPageLoad();
 		scrollDown();
 		return takeListSource(); 
-		}
+	}
 	
 	public String getPageUrl(){
 		return driver.getCurrentUrl();
@@ -117,7 +126,8 @@ public class ChromeOperator {
 		driver.findElement(By.cssSelector(nextPageCss)).click();
 		scrollDown();
 		return currentPageNumber();
-		}
+	}
+	
 	private int currentPageNumber(){
 		String pageNumberCss = "li.page-list li.active";
 		if(!elementExsist(pageNumberCss))
@@ -148,7 +158,7 @@ public class ChromeOperator {
 		driver.findElement(By.cssSelector(nextPageCss)).click();
 		scrollDown();
 		return currentPageNumber();
-		}
+	}
 
 	private void scrollDown(){
 		int count = 0;
